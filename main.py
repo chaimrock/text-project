@@ -63,7 +63,14 @@ def main():
     if args.task == '1':
         analyzer.load_data(sentences_path=args.sentences, names_path=args.names, remove_path=args.removewords)
         result = analyzer.analyze_task1()
-        #print(json.dumps(result, indent=4, sort_keys=True))
+        print(json.dumps(result, indent=4))
+    elif args.task == '2':
+        if args.preprocessed:
+            analyzer.load_data(preprocessed_path=args.preprocessed[0])
+        else:
+            analyzer.load_data(sentences_path=args.sentences, names_path=args.names, remove_path=args.removewords)
+        result = analyzer.analyze_task2(max_k=args.maxk)
+        print(json.dumps(result, indent=4))
     else:
         print("invalid input")
 

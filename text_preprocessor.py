@@ -42,7 +42,7 @@ class TextPreprocessor:
         processed_people = []
         unique_names = set()
         for person in people:
-            cleaned_name = self.clean_name(person.name)
+            cleaned_name = tuple(self.clean_name(person.name))
             cleaned_other_names = [self.clean_name(name) for name in person.other_names]
             if cleaned_name and cleaned_name not in unique_names:
                 unique_names.add(cleaned_name)

@@ -1,7 +1,9 @@
 import csv
+import json
 from sentence import Sentence
 from person import Person
 from text_preprocessor import TextPreprocessor
+from collections import defaultdict
 
 class TextAnalyzer:
     def __init__(self):
@@ -25,7 +27,14 @@ class TextAnalyzer:
                     self.people.append(Person(name, other_names))
         if remove_path:
             self.preprocessor.load_remove_words(remove_path)
-
+        if preprocessed_path:
+            with open(preprocessed_path, 'r') as file:
+                data = json.load(file)
+                self.cleaned_sentences = [Sentence(clean_sentence) for clean_sentence in data['Question 1'] ['Processed Sentences']]
+                self.people = [Person(person[0], person[1]) for person in data['Question 1']['Processed Names']]
+                print(self.cleaned_sentences)
+                print(self.people)
+                
     def analyze_task1(self):
         """Initial Text Preprocessing"""
         processed_sentences = []
